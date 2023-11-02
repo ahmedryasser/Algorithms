@@ -1,25 +1,33 @@
+# binary search
 def search_logn(list, target):
     if list == []:
         return [-1,-1]
     return search_helper(0, len(list), list, target)
 
 def search_helper(start, end, list, target):
+    # Searches a list by picking an element in the middle and comparing it with target then eliminates left half or right half depending on the result 
+    # then making a recursive call 
     index = (start+end)//2
     while list[index] != target:
         if index == start or index == end:
             return [-1,-1]
         elif list[index]<target:
+            # elminate the left half
             return search_helper(index, end, list, target)
         else:
+            # eliminate the right half
             return search_helper(start, index, list, target)
+    #returns the first and last instance of the target in the array if found
     firstLast = first_last(index, list, target)
     return firstLast
 
 def first_last(index, list, target):
     first = index
     last = index
+    #loops all the way to the right until a different number is scanned
     while last<len(list) and list[last] == target:
         last +=1
+    #loops all the way to the left until a different number is scanned
     while list[first] == target:
         first -=1
     return [first+1, last-1]    
@@ -29,6 +37,8 @@ def first_last(index, list, target):
 
 #Task 2
 def matrix_search(matrix, target):
+    # Also a binary search but the index of the middle element is picked by 
+    # using [index//column size][index%column size] to traverse the array like a list
     if not matrix or not matrix[0]:
         return False
     rows = len(matrix) #3
